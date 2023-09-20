@@ -9,18 +9,18 @@
 
 ## Endpoints
 
-1. Users - `http://localhost:3000/wallet/api/users`:
-   post/register - `http://localhost:3000/wallet/api/users/register`
-   post/login - `http://localhost:3000/wallet/api/users/login`
-   post/logout - `http://localhost:3000/wallet/api/users/logout`
-   post/reverify e-mail - `http://localhost:3000/wallet/api/users/reverify`
-   get/verify e-mail - `http://localhost:3000/wallet/api/users/verify/:verificationToken`
-   get/current - `http://localhost:3000/wallet/api/users/current`
+### Users
+- [Register](http://localhost:3000/wallet/api/users/register) - POST
+- [Login](http://localhost:3000/wallet/api/users/login) - POST
+- [Logout](http://localhost:3000/wallet/api/users/logout) - POST
+- [Reverify E-mail](http://localhost:3000/wallet/api/users/reverify) - POST
+- [Verify E-mail](http://localhost:3000/wallet/api/users/verify/:verificationToken) - GET
+- [Current](http://localhost:3000/wallet/api/users/current) - GET
 
-2. Transactions - `http://localhost:3000/wallet/api/transactions`:
-   get/all - `http://localhost:3000/wallet/api/transactions`
-   get/one by id - `http://localhost:3000/wallet/api/transactions/:id`
-   get/transaction's category by id - `http://localhost:3000/wallet/api/transactions/categories/:id`
-   post/create transaction - `http://localhost:3000/wallet/api/transactions`
-   delete/remove transaction - `http://localhost:3000/wallet/api/transactions/:id`
-   put/update transaction - `http://localhost:3000/wallet/api/transactions/:id`
+### Transactions
+- [All Transactions](http://localhost:3000/wallet/api/transactions) - GET
+- [One by ID](http://localhost:3000/wallet/api/transactions/:id) - GET
+- [Transaction's Category by ID](http://localhost:3000/wallet/api/transactions/categories/:id) - GET
+- [Create Transaction](http://localhost:3000/wallet/api/transactions) - POST
+- [Remove Transaction](http://localhost:3000/wallet/api/transactions/:id) - DELETE
+- [Update Transaction](http://localhost:3000/wallet/api/transactions/:id) - PUT
