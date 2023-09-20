@@ -3,6 +3,7 @@ const { Schema, model } = require('mongoose');
 const transaction = new Schema(
   {
     type: {
+      type: String,
       enum: ['-', '+'],
     },
     category: {
