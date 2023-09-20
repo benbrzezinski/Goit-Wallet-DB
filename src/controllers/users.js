@@ -1,3 +1,5 @@
+const jwt = require("jsonwebtoken");
+const bCrypt = require("bcryptjs");
 const service = require("../services/users");
 
 // Aby odpowiedzi były spójne daje przykładowy res:
