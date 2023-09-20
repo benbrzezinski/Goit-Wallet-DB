@@ -1,7 +1,28 @@
-const { Schema, model } = require("mongoose");
+const { Schema, model } = require('mongoose');
 
-const transaction = new Schema({}, { versionKey: false, timestamps: true });
+const transaction = new Schema(
+  {
+    type: {
+      type: String,
+      enum: ['-', '+'],
+    },
+    category: {
+      type: String,
+    },
+    comment: {
+      type: String,
+    },
+    sum: {
+      type: Number,
+    },
+    owner: {
+      type: Schema.Types.ObjectId,
+      ref: 'user',
+    },
+  },
+  { versionKey: false, timestamps: true }
+);
 
-const Transaction = model("Transaction", transaction);
+const Transaction = model('Transaction', transaction);
 
 module.exports = Transaction;
