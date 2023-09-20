@@ -1,4 +1,4 @@
-const service = require("../services/transactions");
+const service = require('../services/transactions');
 
 // Aby odpowiedzi były spójne daje przykładowy res:
 
@@ -11,9 +11,12 @@ const service = require("../services/transactions");
 //     });
 
 const get = async (req, res, next) => {
+  const { _id } = req.user;
   try {
+    const transactions = await service.getTransactions({ _id });
+    res.json({ status: 200, statusText: 'OK', data: transactions });
   } catch (err) {
-    console.error(err.message);
+    res.status(500).json({status: 500, statusText: "Internal serwer error", error:err})
     next(err);
   }
 };
