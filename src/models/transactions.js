@@ -8,12 +8,27 @@ const transaction = new Schema(
     },
     category: {
       type: String,
+      enum: [
+        'Main expenses',
+        'Products',
+        'Car',
+        'Self care',
+        'Child care',
+        'Household products',
+        'Education',
+        'Leisure',
+        'Other expenses',
+        'Entertainment',
+      ],
+    },
+    date: {
+      type: String,
     },
     comment: {
       type: String,
     },
     sum: {
-      type: Number,
+      type: String,
     },
     owner: {
       type: Schema.Types.ObjectId,
