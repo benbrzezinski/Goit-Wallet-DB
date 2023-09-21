@@ -2,17 +2,17 @@ const { createTransport } = require('nodemailer');
 
 const sendMail = (email, verificationToken) => {
   const transporter = createTransport({
-    host: 'smtp-relay.brevo.com',
-    port: 465,
+    host: process.env.SMTP_HOST,
+    port: Number(process.env.SMTP_PORT),
     secure: true,
     auth: {
-      user: 'beniaminbrzezinski@gmail.com',
+      user: process.env.SMTP_USER,
       pass: process.env.SMTP_KEY,
     },
   });
 
   const mailOptions = {
-    from: 'beniaminbrzezinski@gmail.com',
+    from: process.env.SMTP_USER,
     to: email,
     subject: 'E-mail verification Wallet',
     html: `<p style="font-size:20px;">Verify your e-mail address by clicking on this link - <a href="http://localhost:${process.env.PORT}/wallet/api/users/verify/${verificationToken}" target="_blank" rel="noopener noreferrer nofollow"><strong>Verification Link</strong></a></p>`,
