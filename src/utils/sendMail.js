@@ -1,6 +1,6 @@
 const { createTransport } = require('nodemailer');
 
-const sendMail = (email, verificationToken) => {
+const sendMail = async (email, verificationToken) => {
   const transporter = createTransport({
     host: process.env.SMTP_HOST,
     port: Number(process.env.SMTP_PORT),
@@ -18,13 +18,12 @@ const sendMail = (email, verificationToken) => {
     html: `<p style="font-size:20px;">Verify your e-mail address by clicking on this link - <a href="http://localhost:${process.env.PORT}/wallet/api/users/verify/${verificationToken}" target="_blank" rel="noopener noreferrer nofollow"><strong>Verification Link</strong></a></p>`,
   };
 
-  transporter.sendMail(mailOptions, (err, info) => {
-    if (err) {
-      console.error(`Error sending e-mail: ${err.message}`);
-    } else {
-      console.log(`E-mail sent successfully. Response: ${info.response}`);
-    }
-  });
+  try {
+    const info = await transporter.sendMail(mailOptions);
+    console.log(`E-mail sent successfully. Response: ${info.response}`);
+  } catch (err) {
+    console.error(`Error sending e-mail: ${err.message}`);
+  }
 };
 
 module.exports = sendMail;

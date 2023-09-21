@@ -31,7 +31,7 @@ const register = async (req, res, next) => {
 
     await user.save();
     const verificationToken = user.get('verificationToken');
-    sendMail(email, verificationToken);
+    await sendMail(email, verificationToken);
 
     res.status(201).json({
       status: 201,
@@ -184,7 +184,7 @@ const reverifyEmail = async (req, res, next) => {
       });
     }
 
-    sendMail(email, user.verificationToken);
+    await sendMail(email, user.verificationToken);
 
     res.json({
       status: 200,
