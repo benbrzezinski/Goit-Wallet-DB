@@ -1,8 +1,8 @@
-const mongoose = require("mongoose");
-const app = require("./app");
+const mongoose = require('mongoose');
+const app = require('./app');
 
 const SRV_DB = process.env.DB_HOST;
-const PORT = 3000;
+const PORT = Number(process.env.PORT);
 
 const connection = mongoose.connect(SRV_DB, {
   useNewUrlParser: true,
