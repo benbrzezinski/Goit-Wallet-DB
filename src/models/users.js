@@ -2,7 +2,6 @@ const { Schema, model } = require('mongoose');
 
 const user = new Schema(
   {
-    avatarURL: String,
     email: {
       type: String,
       required: [true, 'Email is required'],
