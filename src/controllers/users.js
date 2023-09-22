@@ -6,9 +6,17 @@ const {
   passwordHashBcrypt,
   passwordCompareBcrypt,
 } = require('../utils/bcrypt');
+const {
+  userRegisterSchema,
+  userLoginSchema,
+  userLogoutSchema,
+  userReverifySchema,
+} = require('../utils/validation');
+const { handleValidationError } = require('../utils/handleErrors');
 
 const register = async (req, res, next) => {
   try {
+    await userRegisterSchema.validateAsync(req.body);
     const { body } = req;
     const { email, password } = body;
 
@@ -46,12 +54,13 @@ const register = async (req, res, next) => {
       },
     });
   } catch (err) {
-    next(err);
+    handleValidationError(err, res, next);
   }
 };
 
 const login = async (req, res, next) => {
   try {
+    await userLoginSchema.validateAsync(req.body);
     const { email, password } = req.body;
     const existingUser = await service.getUser({ email });
 
@@ -95,17 +104,18 @@ const login = async (req, res, next) => {
       },
     });
   } catch (err) {
-    next(err);
+    handleValidationError(err, res, next);
   }
 };
 
 const logout = async (req, res, next) => {
   try {
+    await userLogoutSchema.validateAsync(req.body);
     const { _id } = req.user;
     await service.updateUser({ _id }, { token: null });
     res.status(204).end();
   } catch (err) {
-    next(err);
+    handleValidationError(err, res, next);
   }
 };
 
@@ -143,7 +153,10 @@ const verifyEmail = async (req, res, next) => {
       return res.status(404).json({
         status: 404,
         statusText: 'Not Found',
-        data: { message: 'Verification unsuccessful, user not found' },
+        data: {
+          message:
+            'Verification unsuccessful, user was not found or has already been passed',
+        },
       });
     }
 
@@ -165,6 +178,7 @@ const verifyEmail = async (req, res, next) => {
 
 const reverifyEmail = async (req, res, next) => {
   try {
+    await userReverifySchema.validateAsync(req.body);
     const { email } = req.body;
     const user = await service.getUser({ email });
 
@@ -198,7 +212,7 @@ const reverifyEmail = async (req, res, next) => {
       },
     });
   } catch (err) {
-    next(err);
+    handleValidationError(err, res, next);
   }
 };
 
