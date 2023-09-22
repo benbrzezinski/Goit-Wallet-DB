@@ -1,10 +1,26 @@
 const { Schema, model } = require('mongoose');
 
+const date = new Schema({
+  day: {
+    type: String,
+    required: true,
+  },
+  month: {
+    type: String,
+    required: true,
+  },
+  year: {
+    type: String,
+    required: true,
+  },
+});
+
 const transaction = new Schema(
   {
     type: {
       type: String,
       enum: ['-', '+'],
+      required: true,
     },
     category: {
       type: String,
@@ -22,13 +38,19 @@ const transaction = new Schema(
       ],
     },
     date: {
-      type: String,
+      type: date,
+      _id: false,
+      required: true,
     },
     comment: {
       type: String,
+      required: true,
+      trim: true,
     },
     sum: {
       type: String,
+      required: true,
+      trim: true,
     },
     owner: {
       type: Schema.Types.ObjectId,
