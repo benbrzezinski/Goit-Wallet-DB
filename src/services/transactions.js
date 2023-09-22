@@ -1,4 +1,4 @@
-const Transaction = require("../models/transactions");
+const Transaction = require('../models/transactions');
 
 const getTransactions = async userId => {
   try {
@@ -18,7 +18,7 @@ const getTransactionById = async (userId, id) => {
 
 const getTransactionCategory = async (userId, id) => {
   try {
-    const transaction = await Transaction.findOne(
+    const { category } = await Transaction.findOne(
       {
         owner: userId,
         _id: id,
@@ -26,7 +26,7 @@ const getTransactionCategory = async (userId, id) => {
       { category: 1 }
     ).lean();
 
-    return transaction.category;
+    return category;
   } catch (err) {
     console.error(err.message);
   }
@@ -37,6 +37,7 @@ const createTransaction = async body => {
     return await Transaction.create(body);
   } catch (err) {
     console.error(err.message);
+    throw err;
   }
 };
 
@@ -52,16 +53,15 @@ const removeTransaction = async (userId, id) => {
 };
 
 const updateTransaction = async (userId, id, body) => {
+  const opts = {
+    new: true,
+    runValidators: true,
+  };
   try {
-    return await Transaction.findOneAndUpdate(
-      { owner: userId, _id: id },
-      body,
-      {
-        new: true,
-      }
-    ).lean();
+    return await Transaction.findOneAndUpdate({ owner: userId, _id: id }, body, opts).lean();
   } catch (err) {
     console.error(err.message);
+    throw err;
   }
 };
 
