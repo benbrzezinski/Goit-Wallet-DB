@@ -100,6 +100,7 @@ const login = async (req, res, next) => {
         token,
         user: {
           email: user.email,
+          username: user.username,
         },
       },
     });
@@ -130,6 +131,7 @@ const getCurrent = async (req, res, next) => {
       data: {
         user: {
           email: user.email,
+          username: user.username,
         },
       },
     });
