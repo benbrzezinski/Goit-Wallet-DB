@@ -3,8 +3,9 @@ const { handleValidationError } = require('../utils/handleErrors');
 
 const get = async (req, res, next) => {
   const { _id } = req.user;
+  const { query } = req;
   try {
-    const result = await service.getTransactions({ _id });
+    const result = await service.getTransactions({ _id }, query);
     res.json({ status: 200, statusText: 'OK', data: result });
   } catch (err) {
     next(err);

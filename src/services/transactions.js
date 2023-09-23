@@ -1,8 +1,36 @@
 const Transaction = require('../models/transactions');
 
-const getTransactions = async userId => {
+const getTransactions = async (userId, { month = null, year = null }) => {
   try {
-    return await Transaction.find({ owner: userId }).lean();
+    if (!month && !year) {
+      return await Transaction.find({
+        owner: userId,
+        'date.month': String(new Date().getMonth() + 1).padStart(2, 0),
+        'date.year': new Date().getFullYear(),
+      }).lean();
+    }
+
+    if (month && year) {
+      return await Transaction.find({
+        owner: userId,
+        'date.month': month,
+        'date.year': year,
+      }).lean();
+    }
+
+    if (month) {
+      return await Transaction.find({
+        owner: userId,
+        'date.month': month,
+      }).lean();
+    }
+
+    if (year) {
+      return await Transaction.find({
+        owner: userId,
+        'date.year': year,
+      }).lean();
+    }
   } catch (err) {
     console.error(err.message);
   }
@@ -58,7 +86,11 @@ const updateTransaction = async (userId, id, body) => {
     runValidators: true,
   };
   try {
-    return await Transaction.findOneAndUpdate({ owner: userId, _id: id }, body, opts).lean();
+    return await Transaction.findOneAndUpdate(
+      { owner: userId, _id: id },
+      body,
+      opts
+    ).lean();
   } catch (err) {
     console.error(err.message);
     throw err;
