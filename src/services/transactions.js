@@ -1,8 +1,34 @@
-const Transaction = require("../models/transactions");
+const Transaction = require('../models/transactions');
 
-const getTransactions = async userId => {
+const getTransactions = async (userId, { month = null, year = null }) => {
   try {
-    return await Transaction.find({ owner: userId }).lean();
+    if (!month && !year) {
+      return await Transaction.find({
+        owner: userId,
+      }).lean();
+    }
+
+    if (month && year) {
+      return await Transaction.find({
+        owner: userId,
+        'date.month': month,
+        'date.year': year,
+      }).lean();
+    }
+
+    if (month) {
+      return await Transaction.find({
+        owner: userId,
+        'date.month': month,
+      }).lean();
+    }
+
+    if (year) {
+      return await Transaction.find({
+        owner: userId,
+        'date.year': year,
+      }).lean();
+    }
   } catch (err) {
     console.error(err.message);
   }
@@ -18,7 +44,7 @@ const getTransactionById = async (userId, id) => {
 
 const getTransactionCategory = async (userId, id) => {
   try {
-    const transaction = await Transaction.findOne(
+    const { category } = await Transaction.findOne(
       {
         owner: userId,
         _id: id,
@@ -26,7 +52,7 @@ const getTransactionCategory = async (userId, id) => {
       { category: 1 }
     ).lean();
 
-    return transaction.category;
+    return category;
   } catch (err) {
     console.error(err.message);
   }
@@ -37,6 +63,7 @@ const createTransaction = async body => {
     return await Transaction.create(body);
   } catch (err) {
     console.error(err.message);
+    throw err;
   }
 };
 
@@ -52,16 +79,19 @@ const removeTransaction = async (userId, id) => {
 };
 
 const updateTransaction = async (userId, id, body) => {
+  const opts = {
+    new: true,
+    runValidators: true,
+  };
   try {
     return await Transaction.findOneAndUpdate(
       { owner: userId, _id: id },
       body,
-      {
-        new: true,
-      }
+      opts
     ).lean();
   } catch (err) {
     console.error(err.message);
+    throw err;
   }
 };
 
