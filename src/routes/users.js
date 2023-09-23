@@ -1,6 +1,6 @@
-const express = require('express');
-const usersController = require('../controllers/users');
-const auth = require('../middlewares/auth');
+import express from 'express';
+import usersController from '../controllers/users.js';
+import auth from '../middlewares/auth.js';
 
 const router = express.Router();
 
@@ -16,4 +16,4 @@ router.get('/verify/:verificationToken', usersController.verifyEmail);
 
 router.get('/current', auth, usersController.getCurrent);
 
-module.exports = router;
+export default router;

@@ -1,4 +1,4 @@
-const User = require("../models/users");
+import User from '../models/users.js';
 
 const getUser = async query => {
   try {
@@ -26,8 +26,10 @@ const updateUser = async (query, body) => {
   }
 };
 
-module.exports = {
+const service = {
   getUser,
   createUser,
   updateUser,
 };
+
+export default service;
