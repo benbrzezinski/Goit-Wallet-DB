@@ -1,6 +1,6 @@
-const Joi = require('joi');
+import Joi from 'joi';
 
-const userRegisterSchema = Joi.object().keys({
+export const userRegisterSchema = Joi.object().keys({
   username: Joi.string().min(1).max(12).trim().required().messages({
     'string.base': 'Username must be a string',
     'string.min': 'Username must contain at least 1 character',
@@ -22,7 +22,7 @@ const userRegisterSchema = Joi.object().keys({
   }),
 });
 
-const userLoginSchema = Joi.object().keys({
+export const userLoginSchema = Joi.object().keys({
   email: Joi.string().email().trim().required().messages({
     'string.base': 'E-mail must be a string',
     'string.email': 'Enter a valid e-mail address',
@@ -37,21 +37,14 @@ const userLoginSchema = Joi.object().keys({
   }),
 });
 
-const userLogoutSchema = Joi.object({}).unknown(false).messages({
+export const userLogoutSchema = Joi.object({}).unknown(false).messages({
   'object.unknown': 'Body must be empty',
 });
 
-const userReverifySchema = Joi.object().keys({
+export const userReverifySchema = Joi.object().keys({
   email: Joi.string().email().trim().required().messages({
     'string.base': 'E-mail must be a string',
     'string.email': 'Enter a valid e-mail address',
     'any.required': 'E-mail is required',
   }),
 });
-
-module.exports = {
-  userRegisterSchema,
-  userLoginSchema,
-  userLogoutSchema,
-  userReverifySchema,
-};

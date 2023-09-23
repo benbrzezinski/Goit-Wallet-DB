@@ -1,5 +1,5 @@
-const service = require('../services/transactions');
-const { handleValidationError } = require('../utils/handleErrors');
+import service from '../services/transactions.js';
+import { handleValidationError } from '../utils/handleErrors.js';
 
 const get = async (req, res, next) => {
   const { _id } = req.user;
@@ -122,7 +122,7 @@ const update = async (req, res, next) => {
   }
 };
 
-module.exports = {
+const transactionsController = {
   get,
   getById,
   getCategory,
@@ -130,3 +130,5 @@ module.exports = {
   remove,
   update,
 };
+
+export default transactionsController;

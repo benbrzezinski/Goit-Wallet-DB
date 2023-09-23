@@ -1,4 +1,4 @@
-const handleValidationError = (err, res, next) => {
+export const handleValidationError = (err, res, next) => {
   if (err.name !== 'ValidationError') {
     return next(err);
   }
@@ -8,8 +8,4 @@ const handleValidationError = (err, res, next) => {
     statusText: 'Bad Request',
     data: { message: err.message },
   });
-};
-
-module.exports = {
-  handleValidationError,
 };

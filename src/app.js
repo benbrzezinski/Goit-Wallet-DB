@@ -1,10 +1,10 @@
-const express = require('express');
-const morgan = require('morgan');
-const cors = require('cors');
-require('dotenv/config');
-require('./config/passport');
-const usersRouter = require('./routes/users.js');
-const transactionsRouter = require('./routes/transactions.js');
+import express from 'express';
+import morgan from 'morgan';
+import cors from 'cors';
+import 'dotenv/config';
+import './config/passport.js';
+import usersRouter from './routes/users.js';
+import transactionsRouter from './routes/transactions.js';
 
 const app = express();
 const formatsLogger = app.get('env') === 'development' ? 'dev' : 'short';
@@ -36,4 +36,4 @@ app.use((err, _, res, __) => {
   });
 });
 
-module.exports = app;
+export default app;

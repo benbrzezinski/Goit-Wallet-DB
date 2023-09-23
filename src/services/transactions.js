@@ -1,4 +1,4 @@
-const Transaction = require('../models/transactions');
+import Transaction from '../models/transactions.js';
 
 const getTransactions = async (userId, { month = null, year = null }) => {
   try {
@@ -95,7 +95,7 @@ const updateTransaction = async (userId, id, body) => {
   }
 };
 
-module.exports = {
+const service = {
   getTransactions,
   getTransactionById,
   getTransactionCategory,
@@ -103,3 +103,5 @@ module.exports = {
   removeTransaction,
   updateTransaction,
 };
+
+export default service;

@@ -1,18 +1,15 @@
-const jwt = require('jsonwebtoken');
-const { nanoid } = require('nanoid');
-const service = require('../services/users');
-const sendMail = require('../utils/sendMail');
-const {
-  passwordHashBcrypt,
-  passwordCompareBcrypt,
-} = require('../utils/bcrypt');
-const {
+import jwt from 'jsonwebtoken';
+import { nanoid } from 'nanoid';
+import service from '../services/users.js';
+import sendMail from '../utils/sendMail.js';
+import { passwordHashBcrypt, passwordCompareBcrypt } from '../utils/bcrypt.js';
+import {
   userRegisterSchema,
   userLoginSchema,
   userLogoutSchema,
   userReverifySchema,
-} = require('../utils/validation');
-const { handleValidationError } = require('../utils/handleErrors');
+} from '../utils/validation.js';
+import { handleValidationError } from '../utils/handleErrors.js';
 
 const register = async (req, res, next) => {
   try {
@@ -218,7 +215,7 @@ const reverifyEmail = async (req, res, next) => {
   }
 };
 
-module.exports = {
+const usersController = {
   register,
   login,
   logout,
@@ -226,3 +223,5 @@ module.exports = {
   verifyEmail,
   reverifyEmail,
 };
+
+export default usersController;
