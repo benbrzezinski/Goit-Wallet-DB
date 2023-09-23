@@ -10,17 +10,20 @@
 ## Endpoints
 
 ### Users
-- Register: `http://localhost:3000/wallet/api/users/register` - POST
-- Login: `http://localhost:3000/wallet/api/users/login` - POST
-- Logout: `http://localhost:3000/wallet/api/users/logout` - POST
-- Reverify E-mail: `http://localhost:3000/wallet/api/users/reverify` - POST
-- Verify E-mail: `http://localhost:3000/wallet/api/users/verify/:verificationToken` - GET
-- Current: `http://localhost:3000/wallet/api/users/current` - GET
+
+- Register: `https://wallet-api.cyclic.cloud/api/users/register` - POST
+- Login: `https://wallet-api.cyclic.cloud/api/users/login` - POST
+- Logout: `https://wallet-api.cyclic.cloud/api/users/logout` - POST
+- Reverify E-mail: `https://wallet-api.cyclic.cloud/api/users/reverify` - POST
+- Verify E-mail: `https://wallet-api.cyclic.cloud/api/users/verify/:verificationToken` - GET
+- Current: `https://wallet-api.cyclic.cloud/api/users/current` - GET
 
 ### Transactions
-- All Transactions: `http://localhost:3000/wallet/api/transactions` - GET
-- One by ID: `http://localhost:3000/wallet/api/transactions/:id` - GET
-- Transaction's Category by ID: `http://localhost:3000/wallet/api/transactions/categories/:id` - GET
-- Create Transaction: `http://localhost:3000/wallet/api/transactions` - POST
-- Remove Transaction: `http://localhost:3000/wallet/api/transactions/:id` - DELETE
-- Update Transaction: `http://localhost:3000/wallet/api/transactions/:id` - PUT
+
+- All Transactions: `https://wallet-api.cyclic.cloud/api/transactions` - GET
+- Filter by month or year Transactions: `https://wallet-api.cyclic.cloud/api/transactions?month={}&year={}` - GET
+- One by ID: `https://wallet-api.cyclic.cloud/api/transactions/:id` - GET
+- Transaction's Category by ID: `https://wallet-api.cyclic.cloud/api/transactions/categories/:id` - GET
+- Create Transaction: `https://wallet-api.cyclic.cloud/api/transactions` - POST
+- Remove Transaction: `https://wallet-api.cyclic.cloud/api/transactions/:id` - DELETE
+- Update Transaction: `https://wallet-api.cyclic.cloud/api/transactions/:id` - PUT
