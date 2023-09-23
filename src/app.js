@@ -13,8 +13,8 @@ app.use(morgan(formatsLogger));
 app.use(cors());
 app.use(express.json());
 
-app.use('/wallet/api/users', usersRouter);
-app.use('/wallet/api/transactions', transactionsRouter);
+app.use('/api/users', usersRouter);
+app.use('/api/transactions', transactionsRouter);
 
 app.use((err, _, res, __) => {
   res.status(404).json({

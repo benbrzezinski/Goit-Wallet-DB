@@ -5,8 +5,6 @@ const getTransactions = async (userId, { month = null, year = null }) => {
     if (!month && !year) {
       return await Transaction.find({
         owner: userId,
-        'date.month': String(new Date().getMonth() + 1).padStart(2, 0),
-        'date.year': new Date().getFullYear(),
       }).lean();
     }
 
