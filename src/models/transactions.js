@@ -1,4 +1,4 @@
-const { Schema, model } = require('mongoose');
+import { Schema, model } from 'mongoose';
 
 const date = new Schema({
   day: {
@@ -62,4 +62,4 @@ const transaction = new Schema(
 
 const Transaction = model('Transaction', transaction);
 
-module.exports = Transaction;
+export default Transaction;
