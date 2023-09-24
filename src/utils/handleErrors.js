@@ -6,6 +6,6 @@ export const handleValidationError = (err, res, next) => {
   res.status(400).json({
     status: 400,
     statusText: 'Bad Request',
-    data: { message: err.message },
+    result: { message: err.message },
   });
 };
