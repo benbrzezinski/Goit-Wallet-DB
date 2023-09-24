@@ -20,7 +20,7 @@ app.use((err, _, res, __) => {
   res.status(404).json({
     status: 404,
     statusText: 'Not Found',
-    data: {
+    result: {
       message: err.message,
     },
   });
@@ -30,7 +30,7 @@ app.use((err, _, res, __) => {
   res.status(500).json({
     status: 500,
     statusText: 'Internal Server Error',
-    data: {
+    result: {
       message: err.message,
     },
   });
