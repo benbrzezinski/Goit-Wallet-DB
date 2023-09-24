@@ -44,7 +44,7 @@ const register = async (req, res, next) => {
       result: {
         user: {
           email: user.email,
-          verify: user.verify,
+          username: user.username,
         },
         message:
           'Verify your e-mail address. The message has been sent to your e-mail, if you do not see your message, please check SPAM or try again',
@@ -119,13 +119,14 @@ const logout = async (req, res, next) => {
 
 const getCurrent = async (req, res, next) => {
   try {
-    const { _id } = req.user;
+    const { _id, token } = req.user;
     const user = await service.getUser({ _id });
 
     res.json({
       status: 200,
       statusText: 'OK',
       result: {
+        token,
         user: {
           email: user.email,
           username: user.username,
