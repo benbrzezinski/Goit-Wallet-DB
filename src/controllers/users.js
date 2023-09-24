@@ -23,7 +23,7 @@ const register = async (req, res, next) => {
       return res.status(409).json({
         status: 409,
         statusText: 'Conflict',
-        data: {
+        result: {
           message: 'E-mail is already in use',
         },
       });
@@ -41,7 +41,7 @@ const register = async (req, res, next) => {
     res.status(201).json({
       status: 201,
       statusText: 'Created',
-      data: {
+      result: {
         user: {
           email: user.email,
           verify: user.verify,
@@ -68,7 +68,7 @@ const login = async (req, res, next) => {
       return res.status(401).json({
         status: 401,
         statusText: 'Unauthorized',
-        data: { message: 'Incorrect e-mail or password' },
+        result: { message: 'Incorrect e-mail or password' },
       });
     }
 
@@ -76,7 +76,7 @@ const login = async (req, res, next) => {
       return res.status(400).json({
         status: 400,
         statusText: 'Bad Request',
-        data: { message: 'E-mail is not verified' },
+        result: { message: 'E-mail is not verified' },
       });
     }
 
@@ -93,7 +93,7 @@ const login = async (req, res, next) => {
     res.json({
       status: 200,
       statusText: 'OK',
-      data: {
+      result: {
         token,
         user: {
           email: user.email,
@@ -125,7 +125,7 @@ const getCurrent = async (req, res, next) => {
     res.json({
       status: 200,
       statusText: 'OK',
-      data: {
+      result: {
         user: {
           email: user.email,
           username: user.username,
@@ -152,7 +152,7 @@ const verifyEmail = async (req, res, next) => {
       return res.status(404).json({
         status: 404,
         statusText: 'Not Found',
-        data: {
+        result: {
           message:
             'Verification unsuccessful, user was not found or has already been passed',
         },
@@ -162,7 +162,7 @@ const verifyEmail = async (req, res, next) => {
     res.json({
       status: 200,
       statusText: 'OK',
-      data: {
+      result: {
         user: {
           email: user.email,
           verify: user.verify,
@@ -185,7 +185,7 @@ const reverifyEmail = async (req, res, next) => {
       return res.status(404).json({
         status: 404,
         statusText: 'Not Found',
-        data: { message: 'Verification unsuccessful, user not found' },
+        result: { message: 'Verification unsuccessful, user not found' },
       });
     }
 
@@ -193,7 +193,7 @@ const reverifyEmail = async (req, res, next) => {
       return res.status(400).json({
         status: 400,
         statusText: 'Bad Request',
-        data: { message: 'Verification has already been passed' },
+        result: { message: 'Verification has already been passed' },
       });
     }
 
@@ -202,7 +202,7 @@ const reverifyEmail = async (req, res, next) => {
     res.json({
       status: 200,
       statusText: 'OK',
-      data: {
+      result: {
         user: {
           email,
         },
