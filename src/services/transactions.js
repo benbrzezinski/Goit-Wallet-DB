@@ -34,14 +34,6 @@ const getTransactions = async (userId, { month = null, year = null }) => {
   }
 };
 
-const getTransactionById = async (userId, id) => {
-  try {
-    return await Transaction.findOne({ owner: userId, _id: id }).lean();
-  } catch (err) {
-    console.error(err.message);
-  }
-};
-
 const getTransactionCategory = async (userId, id) => {
   try {
     const { category } = await Transaction.findOne(
@@ -97,7 +89,6 @@ const updateTransaction = async (userId, id, body) => {
 
 const service = {
   getTransactions,
-  getTransactionById,
   getTransactionCategory,
   createTransaction,
   removeTransaction,
