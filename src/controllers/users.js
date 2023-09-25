@@ -43,8 +43,8 @@ const register = async (req, res, next) => {
       statusText: 'Created',
       result: {
         user: {
+          username: user.username,
           email: user.email,
-          verify: user.verify,
         },
         message:
           'Verify your e-mail address. The message has been sent to your e-mail, if you do not see your message, please check SPAM or try again',
@@ -96,8 +96,8 @@ const login = async (req, res, next) => {
       result: {
         token,
         user: {
-          email: user.email,
           username: user.username,
+          email: user.email,
         },
       },
     });
@@ -127,8 +127,8 @@ const getCurrent = async (req, res, next) => {
       statusText: 'OK',
       result: {
         user: {
-          email: user.email,
           username: user.username,
+          email: user.email,
         },
       },
     });
