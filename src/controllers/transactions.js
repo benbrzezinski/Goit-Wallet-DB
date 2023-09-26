@@ -12,30 +12,6 @@ const get = async (req, res, next) => {
   }
 };
 
-const getById = async (req, res, next) => {
-  const { id } = req.params;
-  const userId = req.user._id;
-  try {
-    const result = await service.getTransactionById(userId, id);
-
-    if (result) {
-      return res.json({
-        status: 200,
-        statusText: 'OK',
-        result,
-      });
-    }
-
-    res.status(404).json({
-      status: 404,
-      statusText: 'Not Found',
-      result: `Not found transaction id: ${id}`,
-    });
-  } catch (err) {
-    next(err);
-  }
-};
-
 const getCategory = async (req, res, next) => {
   const { id } = req.params;
   const userId = req.user._id;
@@ -89,7 +65,7 @@ const remove = async (req, res, next) => {
       return res.json({
         status: 200,
         statusText: 'OK',
-        result: `Transactions ${result._id} deleted`,
+        result,
       });
     }
 
@@ -132,7 +108,6 @@ const update = async (req, res, next) => {
 
 const transactionsController = {
   get,
-  getById,
   getCategory,
   create,
   remove,
