@@ -5,7 +5,9 @@ const getTransactions = async (userId, { month = null, year = null }) => {
     if (!month && !year) {
       return await Transaction.find({
         owner: userId,
-      }).lean();
+      })
+        .sort({ 'date.year': -1, 'date.month': 1, 'date.day': 1 })
+        .lean();
     }
 
     if (month && year) {
@@ -13,21 +15,27 @@ const getTransactions = async (userId, { month = null, year = null }) => {
         owner: userId,
         'date.month': month,
         'date.year': year,
-      }).lean();
+      })
+        .sort({ 'date.day': 1 })
+        .lean();
     }
 
     if (month) {
       return await Transaction.find({
         owner: userId,
         'date.month': month,
-      }).lean();
+      })
+        .sort({ 'date.year': -1, 'date.day': 1 })
+        .lean();
     }
 
     if (year) {
       return await Transaction.find({
         owner: userId,
         'date.year': year,
-      }).lean();
+      })
+        .sort({ 'date.month': 1, 'date.day': 1 })
+        .lean();
     }
   } catch (err) {
     console.error(err.message);
