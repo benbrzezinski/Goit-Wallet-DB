@@ -154,7 +154,7 @@ const verifyEmail = async (req, res, next) => {
         statusText: 'Not Found',
         result: {
           message:
-            'Verification unsuccessful, user was not found or has already been passed',
+            'Verification unsuccessful, user was not found or has already been verified',
         },
       });
     }
