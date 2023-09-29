@@ -3,9 +3,8 @@ import { handleValidationError } from '../utils/handleErrors.js';
 
 const get = async (req, res, next) => {
   const { _id } = req.user;
-  const { query } = req;
   try {
-    const result = await service.getTransactions({ _id }, query);
+    const result = await service.getTransactions({ _id });
     res.json({ status: 200, statusText: 'OK', result });
   } catch (err) {
     next(err);
