@@ -1,42 +1,12 @@
 import Transaction from '../models/transactions.js';
 
-const getTransactions = async (userId, { month = null, year = null }) => {
+const getTransactions = async userId => {
   try {
-    if (!month && !year) {
-      return await Transaction.find({
-        owner: userId,
-      })
-        .sort({ 'date.year': -1, 'date.month': 1, 'date.day': 1 })
-        .lean();
-    }
-
-    if (month && year) {
-      return await Transaction.find({
-        owner: userId,
-        'date.month': month,
-        'date.year': year,
-      })
-        .sort({ 'date.day': 1 })
-        .lean();
-    }
-
-    if (month) {
-      return await Transaction.find({
-        owner: userId,
-        'date.month': month,
-      })
-        .sort({ 'date.year': -1, 'date.day': 1 })
-        .lean();
-    }
-
-    if (year) {
-      return await Transaction.find({
-        owner: userId,
-        'date.year': year,
-      })
-        .sort({ 'date.month': 1, 'date.day': 1 })
-        .lean();
-    }
+    return await Transaction.find({
+      owner: userId,
+    })
+      .sort({ 'date.year': -1, 'date.month': -1, 'date.day': -1 })
+      .lean();
   } catch (err) {
     console.error(err.message);
   }
