@@ -21,7 +21,6 @@
 ### Transactions
 
 - All Transactions: `https://wallet-api.cyclic.cloud/api/transactions` - GET
-- Filter by month or year Transactions: `https://wallet-api.cyclic.cloud/api/transactions?month={}&year={}` - GET
 - Transaction's Category by ID: `https://wallet-api.cyclic.cloud/api/transactions/categories/:id` - GET
 - Create Transaction: `https://wallet-api.cyclic.cloud/api/transactions` - POST
 - Remove Transaction: `https://wallet-api.cyclic.cloud/api/transactions/:id` - DELETE
