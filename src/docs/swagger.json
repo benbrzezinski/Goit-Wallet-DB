@@ -3,14 +3,14 @@
   "info": {
     "title": "Wallet API",
     "version": "1.0.0",
-    "description": "<b>This is the Wallet API documentation. A final project custom-built by the client and created by `Becoming Masters` programming enthusiasts.</b><p> The full application code can be found on github: <a href='https://github.com/MateuszCharysz/Goit-Wallet'>Frontend</a> <a href='https://github.com/benbrzezinski/Goit-Wallet-DB'>Backend</a></p><p>A working example to test at:</p>"
+    "description": "<b>This is the Wallet API documentation. The final project created by `Becoming Masters` programming enthusiasts.</b><p>The Wallet repository: <a href='https://github.com/MateuszCharysz/Goit-Wallet'><b>frontend</b></a> | <a href='https://github.com/benbrzezinski/Goit-Wallet-DB'><b>backend</b></a></p><p>Working example: <a href='https://mateuszcharysz.github.io/Goit-Wallet/'><b>The Wallet</b></a></p>"
   },
   "servers": [
     {
-      "url": "http://localhost:3000"
+      "url": "https://wallet-api.cyclic.cloud"
     },
     {
-      "url": "https://wallet-api.cyclic.cloud"
+      "url": "http://localhost:3000"
     }
   ],
   "components": {
@@ -609,22 +609,6 @@
         ],
         "tags": ["Transactions"],
         "summary": "Gets user transactions",
-        "parameters": [
-          {
-            "in": "query",
-            "name": "year",
-            "schema": {
-              "type": "integer"
-            }
-          },
-          {
-            "in": "query",
-            "name": "month",
-            "schema": {
-              "type": "integer"
-            }
-          }
-        ],
         "responses": {
           "200": {
             "description": "OK",
