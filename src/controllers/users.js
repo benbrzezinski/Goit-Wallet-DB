@@ -159,17 +159,7 @@ const verifyEmail = async (req, res, next) => {
       });
     }
 
-    res.json({
-      status: 200,
-      statusText: 'OK',
-      result: {
-        user: {
-          email: user.email,
-          verify: user.verify,
-        },
-        message: 'Verification successful',
-      },
-    });
+    res.redirect('https://mateuszcharysz.github.io/Goit-Wallet/');
   } catch (err) {
     next(err);
   }
