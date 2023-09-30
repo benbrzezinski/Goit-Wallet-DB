@@ -28,7 +28,7 @@ const getCategory = async (req, res, next) => {
     res.status(404).json({
       status: '404',
       statusText: 'Not Found',
-      result: `Not found transaction id: ${id}`,
+      result: { message: `Not found transaction id: ${id}` },
     });
   } catch (err) {
     next(err);
@@ -71,7 +71,7 @@ const remove = async (req, res, next) => {
     res.status(404).json({
       status: 404,
       statusText: 'Not Found',
-      result: `Not found transaction id: ${id}`,
+      result: { message: `Not found transaction id: ${id}` },
     });
   } catch (err) {
     next(err);
@@ -98,7 +98,7 @@ const update = async (req, res, next) => {
     res.status(404).json({
       status: 404,
       statusText: 'Not Found',
-      result: `Not found transaction id: ${id}`,
+      result: { message: `Not found transaction id: ${id}` },
     });
   } catch (err) {
     handleValidationError(err, res, next);
