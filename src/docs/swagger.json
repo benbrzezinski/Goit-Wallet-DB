@@ -1,0 +1,862 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Wallet API",
+    "version": "1.0.0",
+    "description": "<b>This is the Wallet API documentation. A final project custom-built by the client and created by `Becoming Masters` programming enthusiasts.</b><p> The full application code can be found on github: <a href='https://github.com/MateuszCharysz/Goit-Wallet'>Frontend</a> <a href='https://github.com/benbrzezinski/Goit-Wallet-DB'>Backend</a></p><p>A working example to test at:</p>"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000"
+    },
+    {
+      "url": "https://wallet-api.cyclic.cloud"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+    "parameters": {
+      "TransactionId": {
+        "in": "path",
+        "name": "id",
+        "required": "true",
+        "description": "Transaction ID.",
+        "schema": {
+          "type": "string"
+        }
+      }
+    },
+    "requestBodies": {
+      "User": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        }
+      },
+      "Transaction": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": ["+", "-"]
+          },
+          "category": {
+            "type": "string",
+            "enum": [
+              "Main expenses",
+              "Products",
+              "Car",
+              "Self care",
+              "Child care",
+              "Household products",
+              "Education",
+              "Leisure",
+              "Other expenses",
+              "Entertainment",
+              "Income"
+            ]
+          },
+          "date": {
+            "type": "object",
+            "properties": {
+              "day": {
+                "type": "integer",
+                "minimum": "1",
+                "maximum": "31"
+              },
+              "month": {
+                "type": "integer",
+                "minimum": "1",
+                "maximum": "12"
+              },
+              "year": {
+                "type": "integer",
+                "example": "2020"
+              }
+            }
+          },
+          "comment": {
+            "type": "string"
+          },
+          "sum": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "responses": {
+      "401Unauthorized": {
+        "description": "Authorization information is missing or invalid.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "number",
+                  "example": 401
+                },
+                "statusText": {
+                  "type": "string",
+                  "example": "Unauthorized"
+                },
+                "result": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Not authorized"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "404NotFound": {
+        "description": "The specified resource was not found.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "number",
+                  "example": 404
+                },
+                "statusText": {
+                  "type": "string",
+                  "example": "Not Found"
+                },
+                "result": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "schemas": {
+      "Login": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        }
+      },
+      "User": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          }
+        }
+      },
+      "Transaction": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "category": {
+            "type": "string"
+          },
+          "date": {
+            "type": "object",
+            "properties": {
+              "day": {
+                "type": "string"
+              },
+              "month": {
+                "type": "string"
+              },
+              "year": {
+                "type": "string"
+              }
+            }
+          },
+          "comment": {
+            "type": "string"
+          },
+          "sum": {
+            "type": "string"
+          },
+          "owner": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "type": "string"
+          }
+        }
+      },
+      "Validation": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "number",
+            "example": 400
+          },
+          "statusText": {
+            "type": "string",
+            "example": "Bad Request"
+          },
+          "result": {
+            "type": "object",
+            "properties": {
+              "message": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "Users",
+      "description": "Endpoints designed to manage user accounts."
+    },
+    {
+      "name": "Transactions",
+      "description": "Endpoints designed to manage users finances."
+    }
+  ],
+  "paths": {
+    "/api/users/register": {
+      "post": {
+        "tags": ["Users"],
+        "summary": "Create a new user",
+        "requestBody": {
+          "required": "true",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#components/requestBodies/User"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 201
+                    },
+                    "statusText": {
+                      "type": "string",
+                      "example": "Created"
+                    },
+                    "result": {
+                      "type": "object",
+                      "properties": {
+                        "user": {
+                          "$ref": "#components/schemas/User"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request. User validation failed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#components/schemas/Validation"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "E-mail is already in use.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "number",
+                      "example": 409
+                    },
+                    "statusText": {
+                      "type": "string",
+                      "example": "Conflict"
+                    },
+                    "result": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/users/login": {
+      "post": {
+        "tags": ["Users"],
+        "summary": "Login user",
+        "requestBody": {
+          "required": "true",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#components/schemas/Login"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "statusText": {
+                      "type": "string",
+                      "example": "OK"
+                    },
+                    "result": {
+                      "type": "object",
+                      "properties": {
+                        "token": {
+                          "type": "string"
+                        },
+                        "user": {
+                          "$ref": "#components/schemas/User"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#components/responses/401Unauthorized"
+          },
+          "400": {
+            "description": "Bad request. User validation failed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#components/schemas/Validation"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/users/logout": {
+      "post": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": ["Users"],
+        "summary": "Log out user",
+        "responses": {
+          "204": {
+            "description": "The user is logged out."
+          },
+          "401": {
+            "$ref": "#components/responses/401Unauthorized"
+          }
+        }
+      }
+    },
+    "/api/users/reverify": {
+      "post": {
+        "tags": ["Users"],
+        "summary": "Resend the verification email",
+        "requestBody": {
+          "required": "true",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "statusText": {
+                      "type": "string",
+                      "example": "OK"
+                    },
+                    "result": {
+                      "type": "object",
+                      "properties": {
+                        "user": {
+                          "type": "object",
+                          "properties": {
+                            "email": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request. Verification has already been passed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#components/schemas/Validation"
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#components/responses/404NotFound"
+          }
+        }
+      }
+    },
+    "/api/users/verify/{verificationToken}": {
+      "get": {
+        "tags": ["Users"],
+        "summary": "Verification email confirmation",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "verificationToken",
+            "required": "true",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "statusText": {
+                      "type": "string",
+                      "example": "OK"
+                    },
+                    "result": {
+                      "type": "object",
+                      "properties": {
+                        "user": {
+                          "type": "object",
+                          "properties": {
+                            "email": {
+                              "type": "string"
+                            },
+                            "verify": {
+                              "type": "boolean"
+                            }
+                          }
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#components/responses/404NotFound"
+          }
+        }
+      }
+    },
+    "/api/users/current": {
+      "get": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": ["Users"],
+        "summary": "Get information about the current user",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "statusText": {
+                      "type": "string",
+                      "example": "OK"
+                    },
+                    "result": {
+                      "type": "object",
+                      "properties": {
+                        "user": {
+                          "$ref": "#components/schemas/User"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#components/responses/401Unauthorized"
+          }
+        }
+      }
+    },
+    "/api/transactions": {
+      "get": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": ["Transactions"],
+        "summary": "Gets user transactions",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "year",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "month",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "statusText": {
+                      "type": "string",
+                      "example": "OK"
+                    },
+                    "result": {
+                      "$ref": "#components/schemas/Transaction"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#components/responses/401Unauthorized"
+          }
+        }
+      },
+      "post": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": ["Transactions"],
+        "summary": "Posts user transactions",
+        "requestBody": {
+          "required": "true",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#components/requestBodies/Transaction"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "The request succeeded, and a new transaction was created as a result.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "number",
+                      "example": 201
+                    },
+                    "statusText": {
+                      "type": "string",
+                      "example": "Created"
+                    },
+                    "result": {
+                      "$ref": "#components/schemas/Transaction"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request. Transaction validation failed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#components/schemas/Validation"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#components/responses/401Unauthorized"
+          }
+        }
+      }
+    },
+    "/api/transactions/{id}": {
+      "delete": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": ["Transactions"],
+        "summary": "Deletes user transactions by ID",
+        "parameters": [{ "$ref": "#components/parameters/TransactionId" }],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "statusText": {
+                      "type": "string",
+                      "example": "OK"
+                    },
+                    "result": {
+                      "type": "string",
+                      "example": "Transactions 6514a9a53b2e54c61e80d878 deleted"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#components/responses/401Unauthorized"
+          },
+          "404": {
+            "$ref": "#components/responses/404NotFound"
+          }
+        }
+      },
+      "put": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": ["Transactions"],
+        "summary": "Updates user transactions by ID",
+        "parameters": [{ "$ref": "#components/parameters/TransactionId" }],
+        "requestBody": {
+          "required": "true",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#components/requestBodies/Transaction"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "statusText": {
+                      "type": "string",
+                      "example": "OK"
+                    },
+                    "result": {
+                      "$ref": "#components/schemas/Transaction"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#components/responses/401Unauthorized"
+          },
+          "400": {
+            "description": "Bad request. Transaction validation failed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#components/schemas/Validation"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/transactions/categories/{id}": {
+      "get": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": ["Transactions"],
+        "summary": "Gets transaction categories by ID",
+        "parameters": [{ "$ref": "#components/parameters/TransactionId" }],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "statusText": {
+                      "type": "string",
+                      "example": "OK"
+                    },
+                    "result": {
+                      "type": "string",
+                      "example": "Main expenses"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#components/responses/401Unauthorized"
+          },
+          "404": {
+            "$ref": "#components/responses/404NotFound"
+          }
+        }
+      }
+    }
+  }
+}
