@@ -3,7 +3,7 @@
   "info": {
     "title": "Wallet API",
     "version": "1.0.0",
-    "description": "<b>This is the Wallet API documentation. The final project created by `Becoming Masters` programming enthusiasts.</b><p>The Wallet repository: <a href='https://github.com/MateuszCharysz/Goit-Wallet'><b>frontend</b></a> | <a href='https://github.com/benbrzezinski/Goit-Wallet-DB'><b>backend</b></a></p><p>Working example: <a href='https://mateuszcharysz.github.io/Goit-Wallet/'><b>The Wallet</b></a></p>"
+    "description": "<b>This is the Wallet API documentation. The final project created by `Becoming Masters` programming enthusiasts.</b><p>The Wallet repository: <a href='https://github.com/MateuszCharysz/Goit-Wallet'>frontend</a> | <a href='https://github.com/benbrzezinski/Goit-Wallet-DB'>backend</a></p><p>Feel free to pop over and give it a try! <a href='https://mateuszcharysz.github.io/Goit-Wallet/'>The Wallet</a></p>"
   },
   "servers": [
     {
@@ -512,40 +512,14 @@
           }
         ],
         "responses": {
-          "200": {
-            "content": {
-              "application/json": {
+          "302": {
+            "description": "Redirection to the home page.",
+            "headers": {
+              "Location": {
+                "description": "Redirect target address",
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "integer",
-                      "example": 200
-                    },
-                    "statusText": {
-                      "type": "string",
-                      "example": "OK"
-                    },
-                    "result": {
-                      "type": "object",
-                      "properties": {
-                        "user": {
-                          "type": "object",
-                          "properties": {
-                            "email": {
-                              "type": "string"
-                            },
-                            "verify": {
-                              "type": "boolean"
-                            }
-                          }
-                        },
-                        "message": {
-                          "type": "string"
-                        }
-                      }
-                    }
-                  }
+                  "type": "string",
+                  "example": "https://mateuszcharysz.github.io/Goit-Wallet"
                 }
               }
             }
