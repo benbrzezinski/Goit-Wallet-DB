@@ -5,7 +5,7 @@ const getTransactions = async userId => {
     return await Transaction.find({
       owner: userId,
     })
-      .sort({ 'date.year': -1, 'date.month': -1, 'date.day': -1 })
+      .sort({ 'date.year': -1, 'date.month': -1, 'date.day': -1, category: 1 })
       .lean();
   } catch (err) {
     console.error(err.message);
