@@ -1,15 +1,15 @@
-import jwt from 'jsonwebtoken';
-import { nanoid } from 'nanoid';
-import service from '../services/users.js';
-import sendMail from '../utils/sendMail.js';
-import { passwordHashBcrypt, passwordCompareBcrypt } from '../utils/bcrypt.js';
+import jwt from "jsonwebtoken";
+import { nanoid } from "nanoid";
+import service from "../services/users.js";
+import sendMail from "../utils/sendMail.js";
+import { passwordHashBcrypt, passwordCompareBcrypt } from "../utils/bcrypt.js";
 import {
   userRegisterSchema,
   userLoginSchema,
   userLogoutSchema,
   userReverifySchema,
-} from '../utils/validation.js';
-import { handleValidationError } from '../utils/handleErrors.js';
+} from "../utils/validation.js";
+import { handleValidationError } from "../utils/handleErrors.js";
 
 const register = async (req, res, next) => {
   try {
@@ -17,37 +17,37 @@ const register = async (req, res, next) => {
     const { body } = req;
     const { email, password } = body;
 
-    const isUserExists = await service.getUser({ email });
+    const ifUserExists = await service.getUser({ email });
 
-    if (isUserExists) {
+    if (ifUserExists) {
       return res.status(409).json({
         status: 409,
-        statusText: 'Conflict',
+        statusText: "Conflict",
         result: {
-          message: 'E-mail is already in use',
+          message: "E-mail is already in use",
         },
       });
     }
 
     const user = await service.createUser(body);
 
-    user.set('verificationToken', nanoid());
-    user.set('password', await passwordHashBcrypt(password));
+    user.set("verificationToken", nanoid());
+    user.set("password", await passwordHashBcrypt(password));
 
     await user.save();
-    const verificationToken = user.get('verificationToken');
+    const verificationToken = user.get("verificationToken");
     await sendMail(email, verificationToken);
 
     res.status(201).json({
       status: 201,
-      statusText: 'Created',
+      statusText: "Created",
       result: {
         user: {
           username: user.username,
           email: user.email,
         },
         message:
-          'Verify your e-mail address. The message has been sent to your e-mail, if you do not see your message, please check SPAM or try again',
+          "Verify your e-mail address. The message has been sent to your e-mail, if you do not see your message, please check SPAM or try again",
       },
     });
   } catch (err) {
@@ -67,16 +67,16 @@ const login = async (req, res, next) => {
     ) {
       return res.status(401).json({
         status: 401,
-        statusText: 'Unauthorized',
-        result: { message: 'Incorrect e-mail or password' },
+        statusText: "Unauthorized",
+        result: { message: "Incorrect e-mail or password" },
       });
     }
 
     if (!existingUser.verify) {
       return res.status(400).json({
         status: 400,
-        statusText: 'Bad Request',
-        result: { message: 'E-mail is not verified' },
+        statusText: "Bad Request",
+        result: { message: "E-mail is not verified" },
       });
     }
 
@@ -85,14 +85,14 @@ const login = async (req, res, next) => {
     };
 
     const token = jwt.sign(payload, process.env.AUTH_KEY, {
-      expiresIn: '1h',
+      expiresIn: "1h",
     });
 
     const user = await service.updateUser({ email }, { token });
 
     res.json({
       status: 200,
-      statusText: 'OK',
+      statusText: "OK",
       result: {
         token,
         user: {
@@ -124,7 +124,7 @@ const getCurrent = async (req, res, next) => {
 
     res.json({
       status: 200,
-      statusText: 'OK',
+      statusText: "OK",
       result: {
         user: {
           username: user.username,
@@ -151,15 +151,15 @@ const verifyEmail = async (req, res, next) => {
     if (!user) {
       return res.status(404).json({
         status: 404,
-        statusText: 'Not Found',
+        statusText: "Not Found",
         result: {
           message:
-            'Verification unsuccessful, user was not found or has already been verified',
+            "Verification unsuccessful, user was not found or has already been verified",
         },
       });
     }
 
-    res.redirect('https://mateuszcharysz.github.io/Goit-Wallet/');
+    res.redirect("https://mateuszcharysz.github.io/Goit-Wallet/");
   } catch (err) {
     next(err);
   }
@@ -174,16 +174,16 @@ const reverifyEmail = async (req, res, next) => {
     if (!user) {
       return res.status(404).json({
         status: 404,
-        statusText: 'Not Found',
-        result: { message: 'Verification unsuccessful, user not found' },
+        statusText: "Not Found",
+        result: { message: "Verification unsuccessful, user not found" },
       });
     }
 
     if (user.verify) {
       return res.status(400).json({
         status: 400,
-        statusText: 'Bad Request',
-        result: { message: 'Verification has already been passed' },
+        statusText: "Bad Request",
+        result: { message: "Verification has already been passed" },
       });
     }
 
@@ -191,13 +191,13 @@ const reverifyEmail = async (req, res, next) => {
 
     res.json({
       status: 200,
-      statusText: 'OK',
+      statusText: "OK",
       result: {
         user: {
           email,
         },
         message:
-          'The message has been sent to your e-mail, if you do not see your message, please check SPAM or try again. If you are still having trouble receiving the verification e-mail, you may need to check your antivirus settings, because it can blocking the outgoing e-mail traffic',
+          "The message has been sent to your e-mail, if you do not see your message, please check SPAM or try again. If you are still having trouble receiving the verification e-mail, you may need to check your antivirus settings, because it can blocking the outgoing e-mail traffic",
       },
     });
   } catch (err) {

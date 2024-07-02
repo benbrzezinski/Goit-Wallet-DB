@@ -1,11 +1,11 @@
-import service from '../services/transactions.js';
-import { handleValidationError } from '../utils/handleErrors.js';
+import service from "../services/transactions.js";
+import { handleValidationError } from "../utils/handleErrors.js";
 
 const get = async (req, res, next) => {
   const { _id } = req.user;
   try {
     const result = await service.getTransactions({ _id });
-    res.json({ status: 200, statusText: 'OK', result });
+    res.json({ status: 200, statusText: "OK", result });
   } catch (err) {
     next(err);
   }
@@ -19,15 +19,15 @@ const getCategory = async (req, res, next) => {
 
     if (result) {
       return res.json({
-        status: '200',
-        statusText: 'OK',
+        status: "200",
+        statusText: "OK",
         result,
       });
     }
 
     res.status(404).json({
-      status: '404',
-      statusText: 'Not Found',
+      status: "404",
+      statusText: "Not Found",
       result: { message: `Not found transaction id: ${id}` },
     });
   } catch (err) {
@@ -46,7 +46,7 @@ const create = async (req, res, next) => {
 
     res.json({
       status: 201,
-      statusText: 'Created',
+      statusText: "Created",
       result,
     });
   } catch (err) {
@@ -63,14 +63,14 @@ const remove = async (req, res, next) => {
     if (result) {
       return res.json({
         status: 200,
-        statusText: 'OK',
+        statusText: "OK",
         result,
       });
     }
 
     res.status(404).json({
       status: 404,
-      statusText: 'Not Found',
+      statusText: "Not Found",
       result: { message: `Not found transaction id: ${id}` },
     });
   } catch (err) {
@@ -90,14 +90,14 @@ const update = async (req, res, next) => {
     if (result) {
       return res.json({
         status: 200,
-        statusText: 'OK',
+        statusText: "OK",
         result,
       });
     }
 
     res.status(404).json({
       status: 404,
-      statusText: 'Not Found',
+      statusText: "Not Found",
       result: { message: `Not found transaction id: ${id}` },
     });
   } catch (err) {

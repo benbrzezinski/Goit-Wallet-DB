@@ -1,4 +1,4 @@
-import { createTransport } from 'nodemailer';
+import { createTransport } from "nodemailer";
 
 const sendMail = async (email, verificationToken) => {
   const transporter = createTransport({
@@ -14,8 +14,8 @@ const sendMail = async (email, verificationToken) => {
   const mailOptions = {
     from: process.env.SMTP_USER,
     to: email,
-    subject: 'E-mail Verification Wallet',
-    html: `<p style="font-size:20px;">Verify your e-mail address by clicking on this link - <a href="https://wallet-api.cyclic.cloud/api/users/verify/${verificationToken}" target="_blank" rel="noopener noreferrer nofollow"><strong>Verification Link</strong></a></p>`,
+    subject: "E-mail Verification Wallet",
+    html: `<p style="font-size:20px;">Verify your e-mail address by clicking on this link - <a href="https://wallet-l6cf.onrender.com/api/users/verify/${verificationToken}" target="_blank" rel="noopener noreferrer nofollow"><strong>Verification Link</strong></a></p>`,
   };
 
   try {

@@ -1,16 +1,16 @@
-import passport from 'passport';
+import passport from "passport";
 
 const auth = (req, res, next) => {
-  passport.authenticate('jwt', { session: false }, (err, user) => {
+  passport.authenticate("jwt", { session: false }, (err, user) => {
     if (
       err ||
       !user ||
-      req.headers.authorization.split(' ').at(1) !== user.token
+      req.headers.authorization.split(" ").at(1) !== user.token
     ) {
       return res.status(401).json({
         status: 401,
-        statusText: 'Unauthorized',
-        result: { message: 'Not authorized' },
+        statusText: "Unauthorized",
+        result: { message: "Not authorized" },
       });
     }
 

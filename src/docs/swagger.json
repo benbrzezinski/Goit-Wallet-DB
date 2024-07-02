@@ -7,7 +7,7 @@
   },
   "servers": [
     {
-      "url": "https://wallet-api.cyclic.cloud"
+      "url": "https://wallet-l6cf.onrender.com"
     },
     {
       "url": "http://localhost:3000"

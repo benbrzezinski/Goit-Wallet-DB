@@ -1,4 +1,4 @@
-import { Schema, model } from 'mongoose';
+import { Schema, model } from "mongoose";
 
 const date = new Schema({
   day: {
@@ -19,23 +19,23 @@ const transaction = new Schema(
   {
     type: {
       type: String,
-      enum: ['-', '+'],
+      enum: ["-", "+"],
       required: true,
     },
     category: {
       type: String,
       enum: [
-        'Main expenses',
-        'Products',
-        'Car',
-        'Self care',
-        'Child care',
-        'Household products',
-        'Education',
-        'Leisure',
-        'Other expenses',
-        'Entertainment',
-        'Income',
+        "Main expenses",
+        "Products",
+        "Car",
+        "Self care",
+        "Child care",
+        "Household products",
+        "Education",
+        "Leisure",
+        "Other expenses",
+        "Entertainment",
+        "Income",
       ],
     },
     date: {
@@ -55,12 +55,12 @@ const transaction = new Schema(
     },
     owner: {
       type: Schema.Types.ObjectId,
-      ref: 'user',
+      ref: "user",
     },
   },
   { versionKey: false, timestamps: true }
 );
 
-const Transaction = model('Transaction', transaction);
+const Transaction = model("Transaction", transaction);
 
 export default Transaction;
